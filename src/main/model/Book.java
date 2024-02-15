@@ -1,6 +1,6 @@
 package model;
 
-//
+//A class that constructs the different characteristics of a book
 public class Book {
     private String title;
     private String genre;
@@ -9,7 +9,7 @@ public class Book {
     private String audience;
     private String status;
 
-
+    //Constructs a book
     public Book(String title, String genre, String author, String form, String audience) {
         this.title = title;
         this.genre = genre;
@@ -19,43 +19,43 @@ public class Book {
         this.status = "unread";
     }
 
-    //REQUIRES:
-    //MODIFIES:
+
+    //MODIFIES:this
     //EFFECTS: Change status of the book
     public void markAsReread() {
         this.status = "read";
     }
 
-    //REQUIRES:
-    //MODIFIES:
+
+    //MODIFIES: this
     //EFFECTS: Update Book title
     public void updateTitle(String newTitle) {
         this.title = newTitle;
     }
 
-    //REQUIRES:
-    //MODIFIES:
+
+    //MODIFIES: this
     //EFFECTS: Update the genre of the book
     public void updateGenre(String newGenre) {
         this.genre = newGenre;
     }
 
-    //REQUIRES:
-    //MODIFIES:
+
+    //MODIFIES: this
     //EFFECTS: Update the author of the book
     public void updateAuthor(String newAuthor) {
         this.author = newAuthor;
     }
 
-    //REQUIRES:
-    //MODIFIES:
+
+    //MODIFIES: this
     //EFFECTS: Update the literary form of the book
     public void updateForm(String newForm) {
         this.form = newForm;
     }
 
-    //REQUIRES:
-    //MODIFIES:
+
+    //MODIFIES: this
     //EFFECTS: Update the audience of the book
     public void updateAudience(String newAudience) {
         this.audience = newAudience;

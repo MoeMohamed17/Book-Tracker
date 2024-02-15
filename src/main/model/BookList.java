@@ -2,17 +2,24 @@ package model;
 
 import java.util.ArrayList;
 
+//A class that contains a list of books
 public class BookList {
     private ArrayList<Book> books;
 
+    //Constructs a list of books
     public BookList() {
         books = new ArrayList<>();
     }
 
+
+    //MODIFIES: this
+    //EFFECTS: adds a given book to the list of books
     public void addBook(Book b) {
         books.add(b);
     }
 
+    //REQUIRES: list is not empty
+    //EFFECTS: counts the number of books in the list
     public int countBooks() {
         int index = 1;
         for (Book b : books) {
@@ -21,6 +28,9 @@ public class BookList {
         return index;
     }
 
+    //REQUIRES: list is not empty
+    //EFFECTS: Produces a list of books that have not been read.
+    //return null if there are no books that are unread.
     public ArrayList<Book> unReadBooks() {
         ArrayList<Book> notRead = new ArrayList<>();
         for (Book b : books) {
@@ -28,9 +38,15 @@ public class BookList {
                 notRead.add(b);
             }
         }
-        return notRead;
+        if (notRead.isEmpty()) {
+            return null;
+        } else {
+            return notRead;
+        }
     }
 
+    //REQUIRES: list is not empty
+    //EFFECTS: counts the number of unread books
     public int countUnReadBooks() {
         int index = 1;
         for (Book b : books) {
@@ -41,6 +57,9 @@ public class BookList {
         return index;
     }
 
+    //REQUIRES: list is not empty
+    //EFFECTS: Produces a list of books that have been read.
+    //return null if there are no books that are read.
     public ArrayList<Book> readBooks() {
         ArrayList<Book> read = new ArrayList<>();
         for (Book b : books) {
@@ -48,9 +67,15 @@ public class BookList {
                 read.add(b);
             }
         }
-        return read;
+        if (read.isEmpty()) {
+            return null;
+        } else {
+            return read;
+        }
     }
 
+    //REQUIRES: list is not empty
+    //EFFECTS: counts the number of read books
     public int countReadBooks() {
         int index = 1;
         for (Book b : books) {

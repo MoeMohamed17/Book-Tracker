@@ -21,11 +21,25 @@ public class BookList {
     //REQUIRES: list is not empty
     //EFFECTS: counts the number of books in the list
     public int countBooks() {
-        int index = 1;
+        int index = 0;
         for (Book b : books) {
             index++;
         }
         return index;
+    }
+
+    //REQUIRES: list is not empty
+    //EFFECTS: Produces a list of books and return null if there are no books
+    public ArrayList<Book> allBooks() {
+        ArrayList<Book> everyBook = new ArrayList<>();
+        for (Book b : books) {
+            everyBook.add(b);
+        }
+        if (everyBook.isEmpty()) {
+            return null;
+        } else {
+            return everyBook;
+        }
     }
 
     //REQUIRES: list is not empty
@@ -34,7 +48,7 @@ public class BookList {
     public ArrayList<Book> unReadBooks() {
         ArrayList<Book> notRead = new ArrayList<>();
         for (Book b : books) {
-            if (b.getStatus() == "unread") {
+            if (b.getStatus().equals("unread")) {
                 notRead.add(b);
             }
         }
@@ -48,9 +62,9 @@ public class BookList {
     //REQUIRES: list is not empty
     //EFFECTS: counts the number of unread books
     public int countUnReadBooks() {
-        int index = 1;
+        int index = 0;
         for (Book b : books) {
-            if (b.getStatus() == "unread") {
+            if (b.getStatus().equals("unread")) {
                 index++;
             }
         }
@@ -63,7 +77,7 @@ public class BookList {
     public ArrayList<Book> readBooks() {
         ArrayList<Book> read = new ArrayList<>();
         for (Book b : books) {
-            if (b.getStatus() == "read") {
+            if (b.getStatus().equals("read")) {
                 read.add(b);
             }
         }
@@ -77,13 +91,12 @@ public class BookList {
     //REQUIRES: list is not empty
     //EFFECTS: counts the number of read books
     public int countReadBooks() {
-        int index = 1;
+        int index = 0;
         for (Book b : books) {
-            if (b.getStatus() == "read") {
+            if (b.getStatus().equals("read")) {
                 index++;
             }
         }
         return index;
     }
-
 }

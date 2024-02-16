@@ -20,12 +20,12 @@ public class BookListTest {
         B1 = new Book("The Great Gatsby", "Novel", "F. Scott Fitzgerald", "Fiction", "Adult");
         B2 = new Book("Animal Farm", "Satire", "George Orwell", "Fable", "Adult");
         B3 = new Book("Can't Hurt Me", "Biography", "David Goggins", "Non-fiction", "Adult");
-        testBooks.addBook(B1);
-        testBooks.addBook(B2);
     }
 
     @Test
     void testAddBook() {
+        testBooks.addBook(B1);
+        testBooks.addBook(B2);
         assertEquals(2, testBooks.countBooks());
         assertEquals(B1, testBooks.allBooks().get(0));
         testBooks.addBook(B3);
@@ -35,6 +35,8 @@ public class BookListTest {
 
     @Test
     void testCountBooks() {
+        testBooks.addBook(B1);
+        testBooks.addBook(B2);
         assertEquals(2, testBooks.countBooks());
         testBooks.addBook(B3);
         assertEquals(3, testBooks.countBooks());
@@ -42,6 +44,9 @@ public class BookListTest {
 
     @Test
     void testAllBooks() {
+        assertEquals(null, testBooks.allBooks());
+        testBooks.addBook(B1);
+        testBooks.addBook(B2);
         assertEquals(B1, testBooks.allBooks().get(0));
         assertEquals(B2, testBooks.allBooks().get(1));
         testBooks.addBook(B3);
@@ -50,6 +55,8 @@ public class BookListTest {
 
     @Test
     void testUnReadBooks() {
+        testBooks.addBook(B1);
+        testBooks.addBook(B2);
         assertEquals(B1, testBooks.unReadBooks().get(0));
         assertEquals(B2, testBooks.unReadBooks().get(1));
         assertEquals(2, testBooks.countUnReadBooks());
@@ -68,6 +75,8 @@ public class BookListTest {
 
     @Test
     void testReadBooks() {
+        testBooks.addBook(B1);
+        testBooks.addBook(B2);
         assertEquals(null, testBooks.readBooks());
         B1.markAsReread();
         assertEquals(B1, testBooks.readBooks().get(0));
@@ -84,6 +93,8 @@ public class BookListTest {
 
     @Test
     void testCountUnReadBooks() {
+        testBooks.addBook(B1);
+        testBooks.addBook(B2);
         assertEquals(2, testBooks.countUnReadBooks());
         testBooks.addBook(B3);
         assertEquals(3, testBooks.countUnReadBooks());
@@ -94,6 +105,8 @@ public class BookListTest {
 
     @Test
     void testCountReadBooks() {
+        testBooks.addBook(B1);
+        testBooks.addBook(B2);
         B1.markAsReread();
         assertEquals(1, testBooks.countReadBooks());
         B2.markAsReread();
@@ -106,6 +119,8 @@ public class BookListTest {
 
     @Test
     void testBooksByGenre() {
+        testBooks.addBook(B1);
+        testBooks.addBook(B2);
         assertEquals(B1, testBooks.booksByGenre("Novel").get(0));
         assertEquals(null, testBooks.booksByGenre("Biography"));
         testBooks.addBook(B3);

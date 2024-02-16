@@ -106,7 +106,7 @@ public class BookList {
     public ArrayList<Book> booksByGenre(String genre) {
         ArrayList<Book> genreBooks = new ArrayList<>();
         for (Book b : books) {
-            if (b.getGenre() == genre) {
+            if (b.getGenre().equals(genre)) {
                 genreBooks.add(b);
             }
         }

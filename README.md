@@ -13,7 +13,7 @@ The target audience for this application includes avid readers, individuals look
 
 - As a user, I want to be able to add books to my reading list so that I can keep track of what I plan to read
 
-- As a user, I want to be able to  add books to a completed list to track my reading progress
+- As a user, I want to be able to add books to a completed list to track my reading progress
 
 - As a user, I want to be able to view the list of books to read and books that I have read
 

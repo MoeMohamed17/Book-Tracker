@@ -28,7 +28,7 @@ public class BookList {
         return index;
     }
 
-    //REQUIRES: list is not empty
+
     //EFFECTS: Produces a list of books and return null if there are no books
     public ArrayList<Book> allBooks() {
         ArrayList<Book> everyBook = new ArrayList<>();
@@ -42,7 +42,7 @@ public class BookList {
         }
     }
 
-    //REQUIRES: list is not empty
+
     //EFFECTS: Produces a list of books that have not been read.
     //return null if there are no books that are unread.
     public ArrayList<Book> unReadBooks() {
@@ -71,7 +71,7 @@ public class BookList {
         return index;
     }
 
-    //REQUIRES: list is not empty
+
     //EFFECTS: Produces a list of books that have been read.
     //return null if there are no books that are read.
     public ArrayList<Book> readBooks() {
@@ -99,4 +99,22 @@ public class BookList {
         }
         return index;
     }
+
+
+    //EFFECTS: Produces a list of books by genre and returns null if
+    // no books of that genre are found
+    public ArrayList<Book> booksByGenre(String genre) {
+        ArrayList<Book> genreBooks = new ArrayList<>();
+        for (Book b : books) {
+            if (b.getGenre() == genre) {
+                genreBooks.add(b);
+            }
+        }
+        if (genreBooks.isEmpty()) {
+            return null;
+        } else {
+            return genreBooks;
+        }
+    }
+
 }

@@ -104,6 +104,16 @@ public class BookListTest {
         assertEquals(3, testBooks.countReadBooks());
     }
 
+    @Test
+    void testBooksByGenre() {
+        assertEquals(B1, testBooks.booksByGenre("Novel").get(0));
+        assertEquals(null, testBooks.booksByGenre("Biography"));
+        testBooks.addBook(B3);
+        assertEquals(B3, testBooks.booksByGenre("Biography").get(0));
+        Book B4 = new Book("A Promised Land", "Biography", "Barack Obama","Non-fiction","Adult" );
+        testBooks.addBook(B4);
+        assertEquals(B4, testBooks.booksByGenre("Biography").get(1));
+    }
 
 
 }

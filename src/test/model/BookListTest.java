@@ -114,6 +114,4 @@ public class BookListTest {
         testBooks.addBook(B4);
         assertEquals(B4, testBooks.booksByGenre("Biography").get(1));
     }
-
-
 }

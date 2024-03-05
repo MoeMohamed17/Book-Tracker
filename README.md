@@ -18,3 +18,9 @@ The target audience for this application includes avid readers, individuals look
 - As a user, I want to be able to view the list of books to read and books that I have read
 
 - As a user, I want to be able to sort books by genre so that I can find books that match my current mood
+
+- As a user, when I start the application, I want to be given the option to load my book tracker from file
+
+- As a user, I want to be able to save my read and unread book lists to a file 
+
+

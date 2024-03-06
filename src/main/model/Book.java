@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 //A class that constructs the different characteristics of a book
-public class Book {
+public class Book implements Writable {
     private String title;
     private String genre;
     private String author;
@@ -85,5 +88,19 @@ public class Book {
         return status;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("title", title);
+        json.put("genre", genre);
+        json.put("author", author);
+        json.put("form", form);
+        json.put("audience", audience);
+        json.put("status", status);
+        return json;
+    }
 }

@@ -2,18 +2,25 @@ package ui;
 
 import model.Book;
 import model.BookList;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 // Inspired by TellerApp
 // this class runs the interface
-public class BookTrackApp {
+public class BookTrackApp  {
+    private static final String JSON_STORE = "./data/BookList.json";
     private BookList bookList;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     //EFFECTS: runs the BookTrack application
-    public BookTrackApp() {
+    public BookTrackApp() throws FileNotFoundException {
         runBookTrack();
     }
 
@@ -46,6 +53,8 @@ public class BookTrackApp {
         bookList = new BookList();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
     //EFFECTS: displays menu of options to users
@@ -56,6 +65,8 @@ public class BookTrackApp {
         System.out.println("\tr -> List read books");
         System.out.println("\tu -> List unread books");
         System.out.println("\tg -> Find a book by genre");
+        System.out.println("\ts -> Save BookList to file");
+        System.out.println("\tl -> Load BookList from file");
         System.out.println("\tq -> quit");
     }
 
@@ -72,6 +83,10 @@ public class BookTrackApp {
             doUnreadBooks();
         } else if (command.equals("g")) {
             doGenre();
+        } else if (command.equals("s")) {
+            saveBookList();
+        } else if (command.equals("l")) {
+            loadBookList();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -139,12 +154,35 @@ public class BookTrackApp {
     private void doGenre() {
         System.out.println("\t -> What genre of book are you interested in?");
         String t = input.next();
-        if (bookList.unReadBooks() == null) {
+        if (bookList.booksByGenre(t) == null) {
             System.out.println("No books found!");
         } else {
             for (Book b : bookList.booksByGenre(t)) {
                 System.out.println(b.getTitle());
             }
+        }
+    }
+
+    // EFFECTS: saves the BookList to file
+    private void saveBookList() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(bookList);
+            jsonWriter.close();
+            System.out.println("Saved BookList to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadBookList() {
+        try {
+            bookList = jsonReader.read();
+            System.out.println("Loaded BookList from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 }

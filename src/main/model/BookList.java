@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 //A class that contains a list of books
-public class BookList {
+public class BookList implements Writable {
     private ArrayList<Book> books;
 
     //Constructs a list of books
@@ -117,4 +121,21 @@ public class BookList {
         }
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        //json.put("name", name);
+        json.put("books", bookListToJson());
+        return json;
+    }
+
+    // EFFECTS: returns things in this BookList as a JSON array
+    private JSONArray bookListToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Book b : books) {
+            jsonArray.put(b.toJson());
+        }
+        return jsonArray;
+    }
 }

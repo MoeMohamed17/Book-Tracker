@@ -1,0 +1,26 @@
+{"books": [
+    {
+        "audience": "Adult",
+        "form": "Fiction",
+        "author": "Moe",
+        "genre": "Horror",
+        "title": "Animal",
+        "status": "unread"
+    },
+    {
+        "audience": "Adult",
+        "form": "Non-fiction",
+        "author": "Zainab",
+        "genre": "Comedy",
+        "title": "Water",
+        "status": "read"
+    },
+    {
+        "audience": "Adult",
+        "form": "Fiction",
+        "author": "Karen",
+        "genre": "Fantasy",
+        "title": "Air",
+        "status": "unread"
+    }
+]}

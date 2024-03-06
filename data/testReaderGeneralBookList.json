@@ -1,0 +1,20 @@
+{
+  "books": [
+    {
+      "title": "animal farm",
+      "genre": "horror",
+      "author": "Moe",
+      "form": "fiction",
+      "audience": "adult",
+      "status": "unread"
+    },
+    {
+      "title": "atomic habits",
+      "genre": "motivational",
+      "author": "james",
+      "form": "non-fiction",
+      "audience": "adult",
+      "status": "unread"
+    }
+  ]
+}

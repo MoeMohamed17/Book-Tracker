@@ -23,4 +23,13 @@ The target audience for this application includes avid readers, individuals look
 
 - As a user, I want to be able to save my read and unread book lists to a file 
 
+## Instructions for Grader
+
+- You can generate the first required action related to the user story "adding multiple Books to a BookList" by pressing on the Add Book button. 
+- You can generate the second required action related to the user story by marking a book as read. Click on a book and click on the Mark as Read Button. 
+- You can view the books you have read and have not read by clicking on View Read Books button and View Unread Books button respectively. 
+- You can locate my visual component when the application launches 
+- You can save the state of my application by clicking the save button 
+- You can reload the state of my application by clicking on the load button. 
+
 

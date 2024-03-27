@@ -2,25 +2,25 @@
     {
         "audience": "Adult",
         "form": "Fiction",
-        "author": "Moe",
-        "genre": "Horror",
-        "title": "Animal",
-        "status": "unread"
+        "author": "moe",
+        "genre": "horror",
+        "title": "new",
+        "status": "read"
     },
     {
-        "audience": "Adult",
-        "form": "Non-fiction",
-        "author": "Zainab",
-        "genre": "Comedy",
-        "title": "Water",
+        "audience": "children",
+        "form": "nonfiction",
+        "author": "karen",
+        "genre": "fantasy",
+        "title": "new2",
         "status": "read"
     },
     {
         "audience": "Adult",
-        "form": "Fiction",
-        "author": "Karen",
-        "genre": "Fantasy",
-        "title": "Air",
-        "status": "unread"
+        "form": "fiction",
+        "author": "Zainab",
+        "genre": "horror",
+        "title": "fire",
+        "status": "read"
     }
 ]}

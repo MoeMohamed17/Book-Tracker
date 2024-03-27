@@ -121,6 +121,17 @@ public class BookList implements Writable {
         }
     }
 
+    public void markBookAsRead(String title) {
+        for (Book book : unReadBooks()) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                book.markAsReread();
+                return;
+            }
+        }
+        System.out.println("Book not found in your reading list.");
+    }
+
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

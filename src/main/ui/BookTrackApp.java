@@ -164,7 +164,7 @@ public class BookTrackApp  {
     }
 
     // EFFECTS: saves the BookList to file
-    private void saveBookList() {
+    public void saveBookList() {
         try {
             jsonWriter.open();
             jsonWriter.write(bookList);
@@ -177,7 +177,7 @@ public class BookTrackApp  {
 
     // MODIFIES: this
     // EFFECTS: loads workroom from file
-    private void loadBookList() {
+    public void loadBookList() {
         try {
             bookList = jsonReader.read();
             System.out.println("Loaded BookList from " + JSON_STORE);

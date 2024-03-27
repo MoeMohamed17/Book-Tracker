@@ -25,11 +25,31 @@ public class BookTrackGUI extends JFrame {
     private static final String JSON_STORE = "./data/BookList.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+    private JPanel panel;
+    private JTextField titleField;
+    private JTextField genreField;
+    private JTextField authorField;
+    private JTextField formField;
+    private JTextField audienceField;
 
 
     public BookTrackGUI() {
         super("Book Tracking Application");
         this.bookList = new BookList();
+        initialize();
+        setWelcomeLabel();
+        setImageLabel();
+        setTableModel();
+        setPanel();
+        setAddBookButton();
+        setViewBooksButton();
+        setViewReadBooksBooksButton();
+        setMarkAsReadButton();
+        setSaveBooksButton();
+        setLoadBooksButton();
+    }
+
+    public void initialize() {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Exits out of application
@@ -39,9 +59,15 @@ public class BookTrackGUI extends JFrame {
         this.getContentPane().setBackground(new Color(120, 149, 167)); //change background colour
         this.setVisible(true); //make window visible
         setLayout(new BorderLayout()); // layout manager is BorderLayout
+    }
+
+    public void setWelcomeLabel() {
         welcomeLabel = new JLabel("Welcome to BookTrack!", SwingConstants.CENTER);
         welcomeLabel.setFont(new Font("Serif", Font.BOLD, 40));
         add(welcomeLabel, BorderLayout.NORTH);
+    }
+
+    public void setImageLabel() {
         ImageIcon originalIcon = new ImageIcon(getClass().getResource("booklogo2.png"));
         int width = 400;
         int height = 400;
@@ -50,19 +76,22 @@ public class BookTrackGUI extends JFrame {
         imageLabel = new JLabel(bookIcon);
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         add(imageLabel, BorderLayout.CENTER);
+    }
 
-
-        // Initializing the table
+    public void setTableModel() {
         String[] columnNames = {"Title", "Genre", "Author", "Form", "Audience"};
         tableModel = new DefaultTableModel(columnNames, 0);
         bookTable = new JTable(tableModel);
         scrollPane = new JScrollPane(bookTable);
+    }
 
-
-        JPanel panel = new JPanel();
+    public void setPanel() {
+        panel = new JPanel();
         panel.setLayout(new FlowLayout()); //if more stuff are added, it will go to new line
         this.add(panel, BorderLayout.SOUTH); // Add the panel to the frame
+    }
 
+    public void setAddBookButton() {
         // Button to add a book
         JButton addBookButton = new JButton("Add Book");
         panel.add(addBookButton);
@@ -74,7 +103,9 @@ public class BookTrackGUI extends JFrame {
                 showAddBookDialog();
             }
         });
+    }
 
+    public void setViewBooksButton() {
         // Button for view unread books
         JButton viewBooksButton = new JButton("View Unread Books");
         panel.add(viewBooksButton);
@@ -83,10 +114,12 @@ public class BookTrackGUI extends JFrame {
         viewBooksButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                displayBooksTable();
+                displayBooks(false);
             }
         });
+    }
 
+    public void setViewReadBooksBooksButton() {
         // Button for view read books
         JButton viewReadBooksBooksButton = new JButton("View Read Books");
         panel.add(viewReadBooksBooksButton);
@@ -95,11 +128,12 @@ public class BookTrackGUI extends JFrame {
         viewReadBooksBooksButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                displayReadBooksTable();
+                displayBooks(true);
             }
         });
+    }
 
-
+    public void setMarkAsReadButton() {
         JButton markAsReadButton = new JButton("Mark as Read");
         panel.add(markAsReadButton);
 
@@ -111,13 +145,16 @@ public class BookTrackGUI extends JFrame {
                 if (selectedRow >= 0) { // Check if a row is selected
                     String title = (String) tableModel.getValueAt(selectedRow, 0);
                     bookList.markBookAsRead(title);
-                    updateTableModel();
+                    updateTableModel(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "Please select a book to mark as read.");
                 }
             }
         });
 
+    }
+
+    public void setSaveBooksButton() {
         // Button for save
         JButton saveBooksButton = new JButton("Save Books");
         panel.add(saveBooksButton);
@@ -129,7 +166,9 @@ public class BookTrackGUI extends JFrame {
                 saveBookList();
             }
         });
+    }
 
+    public void setLoadBooksButton() {
         // Button for load
         JButton loadBooksButton = new JButton("Load Books");
         panel.add(loadBooksButton);
@@ -141,109 +180,93 @@ public class BookTrackGUI extends JFrame {
                 loadBookList();
             }
         });
-
     }
 
-
     private void showAddBookDialog() {
-        JDialog addBookDialog = new JDialog(this, "Add New Book", true);
-        addBookDialog.setLayout(new FlowLayout());
-        addBookDialog.setLocationRelativeTo(null);
-        addBookDialog.setSize(275, 350);
-        addBookDialog.setResizable(false); //cant change the size
-
-        // Form fields
-        JTextField titleField = new JTextField(20);
-        JTextField genreField = new JTextField(20);
-        JTextField authorField = new JTextField(20);
-        JTextField formField = new JTextField(20);
-        JTextField audienceField = new JTextField(20);
-
-
-        // Labels
-        addBookDialog.add(new JLabel("Title:"));
-        addBookDialog.add(titleField);
-        addBookDialog.add(new JLabel("Genre:"));
-        addBookDialog.add(genreField);
-        addBookDialog.add(new JLabel("Author:"));
-        addBookDialog.add(authorField);
-        addBookDialog.add(new JLabel("Literary Form:"));
-        addBookDialog.add(formField);
-        addBookDialog.add(new JLabel("Audience:"));
-        addBookDialog.add(audienceField);
-
-
-        // Add Save Book button
-        JButton saveButton = new JButton("Save Book");
-        addBookDialog.add(saveButton);
-
-        // Action Listener for Save Button
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Create and add book to bookList here
-                String title = titleField.getText();
-                String genre = genreField.getText();
-                String author = authorField.getText();
-                String form = formField.getText();
-                String audience = audienceField.getText();
-
-
-                Book newBook = new Book(title, genre, author, form, audience);
-                bookList.addBook(newBook);
-                updateTableModel(); // Call to update the table model
-                addBookDialog.dispose(); // Close dialog after saving
-            }
-        });
-
+        JDialog addBookDialog = createAddBookDialog();
+        addFormFields(addBookDialog);
+        addSaveButton(addBookDialog);
         addBookDialog.setVisible(true);
     }
 
-    private void updateTableModel() {
-        // Clear the existing table
-        tableModel.setRowCount(0);
-        ArrayList<Book> books = bookList.unReadBooks();
+    private JDialog createAddBookDialog() {
+        JDialog dialog = new JDialog(this, "Add New Book", true);
+        dialog.setLayout(new FlowLayout());
+        dialog.setSize(275, 350);
+        dialog.setLocationRelativeTo(null);
+        dialog.setResizable(false);
+        return dialog;
+    }
+
+    private void addFormFields(JDialog dialog) {
+        titleField = new JTextField(20);
+        genreField = new JTextField(20);
+        authorField = new JTextField(20);
+        formField = new JTextField(20);
+        audienceField = new JTextField(20);
+
+        dialog.add(new JLabel("Title:"));
+        dialog.add(titleField);
+        dialog.add(new JLabel("Genre:"));
+        dialog.add(genreField);
+        dialog.add(new JLabel("Author:"));
+        dialog.add(authorField);
+        dialog.add(new JLabel("Literary Form:"));
+        dialog.add(formField);
+        dialog.add(new JLabel("Audience:"));
+        dialog.add(audienceField);
+    }
+
+    private void addSaveButton(JDialog dialog) {
+        JButton saveButton = new JButton("Save Book");
+        saveButton.addActionListener(e -> saveBookAction(dialog));
+        dialog.add(saveButton);
+    }
+
+    private void saveBookAction(JDialog dialog) {
+        // Extract text from fields here, assume they are class variables or pass them as parameters
+        String title = titleField.getText();
+        String genre = genreField.getText();
+        String author = authorField.getText();
+        String form = formField.getText();
+        String audience = audienceField.getText();
+
+        Book newBook = new Book(title, genre, author, form, audience);
+        bookList.addBook(newBook);
+        updateTableModel(false); // Updated to support switching between read and unread books
+        dialog.dispose();
+    }
+
+    private void updateTableModel(boolean displayReadBooks) {
+        tableModel.setRowCount(0); // Clear the existing table
+        ArrayList<Book> books;
+        if (displayReadBooks) {
+            books = bookList.readBooks();
+        } else {
+            books = bookList.unReadBooks();
+        }
+
         if (books != null && !books.isEmpty()) {
             for (Book book : books) {
-                tableModel.addRow(new Object[]{book.getTitle(), book.getGenre(), book.getAuthor(), book.getForm(), book.getAudience()});
+                tableModel.addRow(new Object[]{book.getTitle(), book.getGenre(),
+                        book.getAuthor(), book.getForm(), book.getAudience()});
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No Unread books to display.");
+            JOptionPane.showMessageDialog(null,
+                    displayReadBooks ? "No read books to display." : "No unread books to display.");
         }
     }
 
-    private void displayBooksTable() {
+    // This method can be used to toggle between displaying read and unread books
+    private void displayBooks(boolean displayReadBooks) {
         welcomeLabel.setVisible(false); // Hide the welcome message
-        imageLabel.setVisible(false); // Hide the image when displaying books
-        add(scrollPane, BorderLayout.CENTER);
-
-        // Refresh the frame to show the table
-        validate();
-        repaint();
-    }
-
-    private void displayReadBooksTable() {
-        welcomeLabel.setVisible(false); // Hide the welcome message
-        imageLabel.setVisible(false); // Hide the image when displaying read books
-        updateReadBooksTableModel(); // Call to update the table model with read books
-        add(scrollPane, BorderLayout.CENTER);
-
-        // Refresh the frame to show the table
-        validate();
-        repaint();
-    }
-
-    private void updateReadBooksTableModel() {
-        tableModel.setRowCount(0);
-        ArrayList<Book> books = bookList.readBooks();
-
-        if (books != null && !books.isEmpty()) {
-            for (Book book : books) {
-                tableModel.addRow(new Object[]{book.getTitle(), book.getGenre(), book.getAuthor(), book.getForm(), book.getAudience()});
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No read books to display.");
+        imageLabel.setVisible(false); // Hide the image
+        updateTableModel(displayReadBooks); // Update the table based on the flag
+        if (!scrollPane.isDisplayable()) { // If the scrollPane is not already added
+            add(scrollPane, BorderLayout.CENTER);
         }
+        revalidate(); // Revalidate and repaint to ensure UI updates correctly
+        repaint();
     }
 
     public void saveBookList() {
@@ -260,7 +283,7 @@ public class BookTrackGUI extends JFrame {
     public void loadBookList() {
         try {
             bookList = jsonReader.read();
-            updateTableModel();
+            updateTableModel(false);
             JOptionPane.showMessageDialog(null, "Loaded BookList!");
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Unable to read to file");

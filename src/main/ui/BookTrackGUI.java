@@ -15,6 +15,7 @@ import model.Book;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+// this class runs the GUI
 public class BookTrackGUI extends JFrame {
     private BookList bookList;
     private DefaultTableModel tableModel;
@@ -32,7 +33,7 @@ public class BookTrackGUI extends JFrame {
     private JTextField formField;
     private JTextField audienceField;
 
-
+    //EFFECTS: runs the BookTrack GUI application
     public BookTrackGUI() {
         super("Book Tracking Application");
         this.bookList = new BookList();
@@ -49,6 +50,8 @@ public class BookTrackGUI extends JFrame {
         setLoadBooksButton();
     }
 
+    //MODIFIES: this
+    //EFFECTS: initializes JSON and creates the window
     public void initialize() {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
@@ -61,12 +64,16 @@ public class BookTrackGUI extends JFrame {
         setLayout(new BorderLayout()); // layout manager is BorderLayout
     }
 
+    //MODIFIES: this
+    //EFFECTS: initializes the welcome label and adds it to the layout
     public void setWelcomeLabel() {
         welcomeLabel = new JLabel("Welcome to BookTrack!", SwingConstants.CENTER);
         welcomeLabel.setFont(new Font("Serif", Font.BOLD, 40));
         add(welcomeLabel, BorderLayout.NORTH);
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds the image and modifies the size
     public void setImageLabel() {
         ImageIcon originalIcon = new ImageIcon(getClass().getResource("booklogo2.png"));
         int width = 400;
@@ -78,6 +85,8 @@ public class BookTrackGUI extends JFrame {
         add(imageLabel, BorderLayout.CENTER);
     }
 
+
+    //EFFECTS: creates the table
     public void setTableModel() {
         String[] columnNames = {"Title", "Genre", "Author", "Form", "Audience"};
         tableModel = new DefaultTableModel(columnNames, 0);
@@ -85,12 +94,15 @@ public class BookTrackGUI extends JFrame {
         scrollPane = new JScrollPane(bookTable);
     }
 
+    //EFFECTS: Creates the bottom panel for the buttons
     public void setPanel() {
         panel = new JPanel();
         panel.setLayout(new FlowLayout()); //if more stuff are added, it will go to new line
         this.add(panel, BorderLayout.SOUTH); // Add the panel to the frame
     }
 
+
+    //EFFECTS: Creates Add Book button
     public void setAddBookButton() {
         // Button to add a book
         JButton addBookButton = new JButton("Add Book");
@@ -105,6 +117,7 @@ public class BookTrackGUI extends JFrame {
         });
     }
 
+    //EFFECTS: Creates View Unread Books button
     public void setViewBooksButton() {
         // Button for view unread books
         JButton viewBooksButton = new JButton("View Unread Books");
@@ -119,6 +132,7 @@ public class BookTrackGUI extends JFrame {
         });
     }
 
+    //EFFECTS: Creates View Read Books button
     public void setViewReadBooksBooksButton() {
         // Button for view read books
         JButton viewReadBooksBooksButton = new JButton("View Read Books");
@@ -133,6 +147,8 @@ public class BookTrackGUI extends JFrame {
         });
     }
 
+
+    //EFFECTS: Creates the Mark as Read button
     public void setMarkAsReadButton() {
         JButton markAsReadButton = new JButton("Mark as Read");
         panel.add(markAsReadButton);
@@ -154,6 +170,7 @@ public class BookTrackGUI extends JFrame {
 
     }
 
+    //EFFECTS: Creates the Save Books Button
     public void setSaveBooksButton() {
         // Button for save
         JButton saveBooksButton = new JButton("Save Books");
@@ -168,6 +185,7 @@ public class BookTrackGUI extends JFrame {
         });
     }
 
+    //EFFECTS: Creates the Load Books Button
     public void setLoadBooksButton() {
         // Button for load
         JButton loadBooksButton = new JButton("Load Books");
@@ -182,6 +200,7 @@ public class BookTrackGUI extends JFrame {
         });
     }
 
+    //EFFECTS: Runs the add book dialog window
     private void showAddBookDialog() {
         JDialog addBookDialog = createAddBookDialog();
         addFormFields(addBookDialog);
@@ -189,6 +208,8 @@ public class BookTrackGUI extends JFrame {
         addBookDialog.setVisible(true);
     }
 
+    //MODIFIES: this
+    //EFFECTS: Creates the add book dialog window
     private JDialog createAddBookDialog() {
         JDialog dialog = new JDialog(this, "Add New Book", true);
         dialog.setLayout(new FlowLayout());
@@ -198,6 +219,8 @@ public class BookTrackGUI extends JFrame {
         return dialog;
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds all the field for dialog window
     private void addFormFields(JDialog dialog) {
         titleField = new JTextField(20);
         genreField = new JTextField(20);
@@ -217,14 +240,16 @@ public class BookTrackGUI extends JFrame {
         dialog.add(audienceField);
     }
 
+    //EFFECTS: Creates the save book button
     private void addSaveButton(JDialog dialog) {
         JButton saveButton = new JButton("Save Book");
         saveButton.addActionListener(e -> saveBookAction(dialog));
         dialog.add(saveButton);
     }
 
+    //MODIFIES: this
+    //EFFECTS: Save book button's actions from user
     private void saveBookAction(JDialog dialog) {
-        // Extract text from fields here, assume they are class variables or pass them as parameters
         String title = titleField.getText();
         String genre = genreField.getText();
         String author = authorField.getText();
@@ -233,10 +258,12 @@ public class BookTrackGUI extends JFrame {
 
         Book newBook = new Book(title, genre, author, form, audience);
         bookList.addBook(newBook);
-        updateTableModel(false); // Updated to support switching between read and unread books
+        updateTableModel(false);
         dialog.dispose();
     }
 
+    //MODIFIES: this
+    //EFFECTS: Updates the table with read or unread books
     private void updateTableModel(boolean displayReadBooks) {
         tableModel.setRowCount(0); // Clear the existing table
         ArrayList<Book> books;
@@ -257,18 +284,20 @@ public class BookTrackGUI extends JFrame {
         }
     }
 
-    // This method can be used to toggle between displaying read and unread books
+    //MODIFIES: this
+    //EFFECTS: Toggle between displaying read and unread books
     private void displayBooks(boolean displayReadBooks) {
         welcomeLabel.setVisible(false); // Hide the welcome message
         imageLabel.setVisible(false); // Hide the image
-        updateTableModel(displayReadBooks); // Update the table based on the flag
-        if (!scrollPane.isDisplayable()) { // If the scrollPane is not already added
+        updateTableModel(displayReadBooks); // Update the table
+        if (!scrollPane.isDisplayable()) {
             add(scrollPane, BorderLayout.CENTER);
         }
-        revalidate(); // Revalidate and repaint to ensure UI updates correctly
+        revalidate();
         repaint();
     }
 
+    // EFFECTS: saves the BookList to file
     public void saveBookList() {
         try {
             jsonWriter.open();
@@ -280,6 +309,8 @@ public class BookTrackGUI extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads bookList from file
     public void loadBookList() {
         try {
             bookList = jsonReader.read();

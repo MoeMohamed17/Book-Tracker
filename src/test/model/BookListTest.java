@@ -130,4 +130,14 @@ public class BookListTest {
         testBooks.addBook(B4);
         assertEquals(B4, testBooks.booksByGenre("Biography").get(1));
     }
+
+    @Test
+    void testMarkBookAsRead() {
+        testBooks.addBook(B1);
+        testBooks.addBook(B2);
+        testBooks.markBookAsRead("The Great Gatsby");
+        assertEquals("read", B1.getStatus());
+        assertEquals("unread", B2.getStatus());
+        testBooks.markBookAsRead("Animal Farm");
+    }
 }

@@ -138,6 +138,7 @@ public class BookListTest {
         testBooks.markBookAsRead("The Great Gatsby");
         assertEquals("read", B1.getStatus());
         assertEquals("unread", B2.getStatus());
-        testBooks.markBookAsRead("Animal Farm");
+        testBooks.markBookAsRead("Moe");
+        assertEquals("unread", B2.getStatus());
     }
 }

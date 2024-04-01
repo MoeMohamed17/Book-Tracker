@@ -20,6 +20,7 @@ public class BookList implements Writable {
     //EFFECTS: adds a given book to the list of books
     public void addBook(Book b) {
         books.add(b);
+        EventLog.getInstance().logEvent(new Event("Added a new book to unread books"));//for eventLog
     }
 
     //REQUIRES: list is not empty
@@ -125,6 +126,7 @@ public class BookList implements Writable {
         for (Book book : unReadBooks()) {
             if (book.getTitle().equalsIgnoreCase(title)) {
                 book.markAsReread();
+                EventLog.getInstance().logEvent(new Event("Marked unread book as read"));//for eventLog
                 return;
             }
         }

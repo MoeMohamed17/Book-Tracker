@@ -32,4 +32,14 @@ The target audience for this application includes avid readers, individuals look
 - You can save the state of my application by clicking the save button 
 - You can reload the state of my application by clicking on the load button. 
 
+##  Phase 4: Task 2
+- Here are the logged events:
+- Mon Apr 01 01:23:36 PDT 2024
+- Added a new book to unread books
+- Mon Apr 01 01:25:29 PDT 2024
+- Added a new book to unread books
+- Mon Apr 01 01:25:44 PDT 2024
+- Marked unread book as read
+
+
 

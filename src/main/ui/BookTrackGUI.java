@@ -12,8 +12,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import model.Book;
+import model.EventLog;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import model.Event;
 
 // this class runs the GUI
 public class BookTrackGUI extends JFrame {
@@ -62,6 +64,14 @@ public class BookTrackGUI extends JFrame {
         this.getContentPane().setBackground(new Color(120, 149, 167)); //change background colour
         this.setVisible(true); //make window visible
         setLayout(new BorderLayout()); // layout manager is BorderLayout
+
+        //added this to print out all my events
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Here are the logged events:");
+            for (Event event : EventLog.getInstance()) {
+                System.out.println(event.toString());
+            }
+        }));
     }
 
     //MODIFIES: this

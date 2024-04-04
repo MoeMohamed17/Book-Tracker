@@ -65,13 +65,18 @@ public class BookTrackGUI extends JFrame {
         this.setVisible(true); //make window visible
         setLayout(new BorderLayout()); // layout manager is BorderLayout
 
-        //added this to print out all my events
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("Here are the logged events:");
-            for (Event event : EventLog.getInstance()) {
-                System.out.println(event.toString());
+        //MODIFIES: this
+        //EFFECTS: Prints out all the events in the EventLog
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Here are the logged events:");
+                for (Event event : EventLog.getInstance()) {
+                    System.out.println(event.toString());
+                }
             }
         }));
+
     }
 
     //MODIFIES: this

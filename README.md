@@ -41,5 +41,8 @@ The target audience for this application includes avid readers, individuals look
 - Mon Apr 01 01:25:44 PDT 2024
 - Marked unread book as read
 
+##  Phase 4: Task 3
+BookList should have implemented using the Singleton design pattern. Since the application’s functionality revolves around managing a collection of books, this pattern would ensure that all parts of the application use the same instance of the book collection. To actually do this, I would implement the getinstance method to create one object of the BookList class. This approach would eliminate inconsistencies that could be a problem when having multiple instances of your book list.
 
+The graphical user interface (GUI) of the application should have been created with multiple classes. I would have created a class for each panel and then extended appropriately. This will allow me to keep all the code for a specific part organized in its own class, improving cohesion.
 
